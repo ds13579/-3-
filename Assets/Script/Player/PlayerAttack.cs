@@ -25,8 +25,8 @@ public class PlayerAttack : MonoBehaviour
             facingDirection = 1;
         }
 
-        // 공격
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 마우스 왼쪽 클릭으로 공격
+        if (Input.GetMouseButtonDown(0))
         {
             Attack();
         }
