@@ -12,6 +12,15 @@ public class PlayerAttack : MonoBehaviour
     // 공격 이펙트가 플레이어에서 얼마나 떨어질지
     public float effectDistance = 1f;
 
+    // 1. 애니메이션을 제어할 변수 추가
+    private Animator anim;
+
+    void Start()
+    {
+        // 2. 캐릭터에 붙어있는 Animator 부품 가져오기
+        anim = GetComponent<Animator>();
+    }
+
     void Update()
     {
         // 플레이어 방향 확인
@@ -34,17 +43,20 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
+        // 3. 공격 버튼을 누르면 애니메이션 트리거(attack) 실행!
+        if (anim != null)
+        {
+            anim.SetTrigger("attack");
+        }
+
         // 공격 이펙트 위치 설정
         if (attackEffect != null)
         {
             Vector3 effectPosition = attackEffect.transform.localPosition;
-
             effectPosition.x = effectDistance * facingDirection;
-
             attackEffect.transform.localPosition = effectPosition;
 
             attackEffect.SetActive(true);
-
             Invoke(nameof(HideAttackEffect), 0.5f);
         }
 
@@ -60,8 +72,7 @@ public class PlayerAttack : MonoBehaviour
 
             if (monster != null)
             {
-                float direction =
-                    enemy.transform.position.x - transform.position.x;
+                float direction = enemy.transform.position.x - transform.position.x;
 
                 if (direction * facingDirection > 0)
                 {
